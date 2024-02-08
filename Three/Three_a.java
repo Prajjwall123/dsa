@@ -1,8 +1,9 @@
+package Three;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;;
 
-public class Q3{
+public class Three_a{
     public static void main(String[] args) {
         System.out.println("Score Tracker Algorithm\nCalculates the median of assignment scores");
         ScoreTracker scoreTracker = new ScoreTracker();
