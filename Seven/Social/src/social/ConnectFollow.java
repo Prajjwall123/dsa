@@ -5,20 +5,39 @@
 package social;
 
 import database.DbConnection;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.JLabel;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  *
  * @author acer
  */
 public class ConnectFollow extends javax.swing.JFrame {
+    int userid;
+    int number_of_follow_people;
+    int number_of_following_people;
+    String recc_username;
+    
+    String username;
+    DefaultTableModel model;
     /**
      * Creates new form Connection
      */
-    public ConnectFollow() {
+    public ConnectFollow(int userid) {
+        this.userid=userid;
+        System.out.println(userid);
         initComponents();
+        setLabel();
+        setRecordsToTable(postTable);
+        
     }
 
     /**
@@ -30,64 +49,35 @@ public class ConnectFollow extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        label1 = new java.awt.Label();
         panel1 = new java.awt.Panel();
-        jLabel5 = new javax.swing.JLabel();
-        panel3 = new java.awt.Panel();
-        view_connection = new javax.swing.JButton();
         panel4 = new java.awt.Panel();
-        jLabel8 = new javax.swing.JLabel();
-        follow_username_field = new javax.swing.JTextField();
-        jLabel11 = new javax.swing.JLabel();
         connectbtn = new javax.swing.JButton();
-        username_field = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        follow_username_field = new javax.swing.JTextField();
+        panel2 = new java.awt.Panel();
+        jLabel12 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        postTable = new javax.swing.JTable();
+        panel6 = new java.awt.Panel();
+        username_label = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
+
+        label1.setText("label1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
-        panel1.setBackground(new java.awt.Color(102, 102, 102));
-
-        jLabel5.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        jLabel5.setText("Username");
-
-        panel3.setBackground(new java.awt.Color(51, 51, 51));
-
-        view_connection.setText("View Connections");
-        view_connection.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                view_connectionActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout panel3Layout = new javax.swing.GroupLayout(panel3);
-        panel3.setLayout(panel3Layout);
-        panel3Layout.setHorizontalGroup(
-            panel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel3Layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(view_connection)
-                .addContainerGap(26, Short.MAX_VALUE))
-        );
-        panel3Layout.setVerticalGroup(
-            panel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel3Layout.createSequentialGroup()
-                .addContainerGap(24, Short.MAX_VALUE)
-                .addComponent(view_connection)
-                .addGap(53, 53, 53))
-        );
+        panel1.setBackground(new java.awt.Color(0, 51, 51));
+        panel1.setPreferredSize(new java.awt.Dimension(500, 500));
 
         panel4.setBackground(new java.awt.Color(0, 51, 51));
 
-        jLabel8.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel8.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setText("Search User");
-
-        jLabel11.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel11.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setText("Username");
-
-        connectbtn.setText("Connect");
+        connectbtn.setBackground(new java.awt.Color(51, 51, 51));
+        connectbtn.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        connectbtn.setForeground(new java.awt.Color(255, 255, 255));
+        connectbtn.setText("Follow");
         connectbtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 connectbtnActionPerformed(evt);
@@ -99,101 +89,216 @@ public class ConnectFollow extends javax.swing.JFrame {
         panel4Layout.setHorizontalGroup(
             panel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel4Layout.createSequentialGroup()
-                .addGroup(panel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panel4Layout.createSequentialGroup()
-                        .addGap(77, 77, 77)
-                        .addComponent(jLabel11)
-                        .addGap(42, 42, 42)
-                        .addComponent(follow_username_field, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(panel4Layout.createSequentialGroup()
-                        .addGap(161, 161, 161)
-                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(91, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel4Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addGap(145, 145, 145)
                 .addComponent(connectbtn)
-                .addGap(199, 199, 199))
+                .addContainerGap(163, Short.MAX_VALUE))
         );
         panel4Layout.setVerticalGroup(
             panel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel4Layout.createSequentialGroup()
-                .addContainerGap(50, Short.MAX_VALUE)
-                .addComponent(jLabel8)
-                .addGap(41, 41, 41)
-                .addGroup(panel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel11)
-                    .addComponent(follow_username_field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(40, 40, 40)
+                .addGap(20, 20, 20)
                 .addComponent(connectbtn)
-                .addGap(58, 58, 58))
+                .addContainerGap(210, Short.MAX_VALUE))
         );
+
+        jLabel8.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel8.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setText("Search User");
+
+        jLabel11.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel11.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel11.setText("Username");
 
         javax.swing.GroupLayout panel1Layout = new javax.swing.GroupLayout(panel1);
         panel1.setLayout(panel1Layout);
         panel1Layout.setHorizontalGroup(
             panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel1Layout.createSequentialGroup()
-                .addGap(297, 297, 297)
-                .addComponent(panel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(220, 220, 220))
+                .addGap(149, 149, 149)
+                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(panel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(username_field, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(198, 198, 198))
+                    .addGroup(panel1Layout.createSequentialGroup()
+                        .addGap(69, 69, 69)
+                        .addComponent(jLabel11)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(follow_username_field, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panel1Layout.createSequentialGroup()
+                        .addContainerGap(22, Short.MAX_VALUE)
+                        .addComponent(panel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(87, 87, 87))
         );
         panel1Layout.setVerticalGroup(
             panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel1Layout.createSequentialGroup()
-                .addGap(90, 90, 90)
+                .addGap(111, 111, 111)
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(username_field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel11)
+                    .addComponent(follow_username_field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(29, 29, 29)
+                .addComponent(panel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        panel2.setBackground(new java.awt.Color(0, 51, 51));
+        panel2.setForeground(new java.awt.Color(51, 51, 0));
+        panel2.setPreferredSize(new java.awt.Dimension(500, 510));
+
+        jLabel12.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel12.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel12.setText("Reccomended Users");
+
+        postTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "username"
+            }
+        ));
+        postTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                postTableMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(postTable);
+
+        javax.swing.GroupLayout panel2Layout = new javax.swing.GroupLayout(panel2);
+        panel2.setLayout(panel2Layout);
+        panel2Layout.setHorizontalGroup(
+            panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel2Layout.createSequentialGroup()
+                .addGroup(panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panel2Layout.createSequentialGroup()
+                        .addGap(46, 46, 46)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 414, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panel2Layout.createSequentialGroup()
+                        .addGap(146, 146, 146)
+                        .addComponent(jLabel12)))
+                .addContainerGap(40, Short.MAX_VALUE))
+        );
+        panel2Layout.setVerticalGroup(
+            panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel2Layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addComponent(jLabel12)
                 .addGap(32, 32, 32)
-                .addComponent(panel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(42, 42, 42)
-                .addComponent(panel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(37, 37, 37))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(51, Short.MAX_VALUE))
+        );
+
+        panel6.setBackground(new java.awt.Color(0, 51, 51));
+        panel6.setPreferredSize(new java.awt.Dimension(1000, 100));
+
+        username_label.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        username_label.setForeground(new java.awt.Color(255, 255, 255));
+        username_label.setText("Username");
+
+        jButton2.setBackground(new java.awt.Color(51, 51, 51));
+        jButton2.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
+        jButton2.setText("Dashboard");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panel6Layout = new javax.swing.GroupLayout(panel6);
+        panel6.setLayout(panel6Layout);
+        panel6Layout.setHorizontalGroup(
+            panel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(314, 314, 314)
+                .addComponent(username_label)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        panel6Layout.setVerticalGroup(
+            panel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel6Layout.createSequentialGroup()
+                .addContainerGap(38, Short.MAX_VALUE)
+                .addComponent(username_label)
+                .addGap(33, 33, 33))
+            .addGroup(panel6Layout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(jButton2)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(panel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(4, 4, 4)
+                .addComponent(panel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(panel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(panel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(2, 2, 2)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(panel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void view_connectionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_view_connectionActionPerformed
-        // TODO add your handling code here:
-        int our_userid=findUserIdByUsername(username_field.getText());
-        GraphSystem gs = GraphSystem.loadGraphFromFile("saver.txt");
-        JOptionPane.showMessageDialog(null, gs.getConnections(our_userid));  
-        
-    }//GEN-LAST:event_view_connectionActionPerformed
-
     private void connectbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_connectbtnActionPerformed
         // TODO add your handling code here:
-        int our_userid=findUserIdByUsername(username_field.getText());
+        int our_userid=userid;
         String the_other_guy= follow_username_field.getText();
         int the_other_user=findUserIdByUsername(the_other_guy);
         GraphSystem gs = GraphSystem.loadGraphFromFile("saver.txt");
-        gs.addConnection(our_userid, the_other_user);
-        JOptionPane.showMessageDialog(null, our_userid+":"+username_field.getText()+" is now connected to :"+the_other_guy+":"+the_other_user);  
-        gs.saveGraphToFile("saver.txt");
+        if(gs.userExists(the_other_user)){
+            gs.addConnection(our_userid, the_other_user);
+            JOptionPane.showMessageDialog(null, our_userid+":"+userid+" is now connected to :"+the_other_guy+":"+the_other_user);  
+            gs.saveGraphToFile("saver.txt");
+        }
+        else{
+            JOptionPane.showMessageDialog(null, the_other_guy+" does not exist");  
+        }
 
 
     }//GEN-LAST:event_connectbtnActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        Dashboard dashboard = new Dashboard(getUsernameByUserId());
+        dashboard.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void postTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_postTableMouseClicked
+        // TODO add your handling code here:
+        int rowNo = postTable.getSelectedRow();
+        TableModel model = postTable.getModel();
+
+        recc_username= model.getValueAt(rowNo, 0).toString();
+        GraphSystem gs= GraphSystem.loadGraphFromFile("saver.txt");
+        int recc_userid=findUserIdByUsername(recc_username);
+        gs.addConnection(userid, recc_userid);
+        JOptionPane.showMessageDialog(null,username_label.getText()+":now follows :"+recc_username);
+        gs.saveGraphToFile("saver.txt");
+    }//GEN-LAST:event_postTableMouseClicked
+
+    public void setLabel(){
+        String the_user_to_set=getUsernameByUserId();
+        username_label.setText(the_user_to_set);
+    }
+    
+    
     public static int findUserIdByUsername(String username) {
         int userId = -1; // Default value if user is not found or if an error occurs
         java.sql.Connection connection = null;
@@ -205,7 +310,7 @@ public class ConnectFollow extends javax.swing.JFrame {
             connection = DbConnection.dbConnect(); // Example method for establishing connection
 
             // Prepare SQL query
-            String query = "SELECT userid FROM users WHERE username = ?";
+            String query = "SELECT user_id FROM users WHERE username = ?";
             statement = connection.prepareStatement(query);
             statement.setString(1, username);
 
@@ -214,7 +319,7 @@ public class ConnectFollow extends javax.swing.JFrame {
 
             // Process the result set
             if (resultSet.next()) {
-                userId = resultSet.getInt("userid");
+                userId = resultSet.getInt("user_id");
             }
         } catch (Exception ex) {
             ex.printStackTrace(); // Handle or log the exception as needed
@@ -232,6 +337,84 @@ public class ConnectFollow extends javax.swing.JFrame {
         return userId;
     }
     
+public void setRecordsToTable(JTable postTable) {
+    List<String> unfollowedUsers=unfollowed_users(userid);
+
+    DefaultTableModel model = (DefaultTableModel) postTable.getModel();
+    for (String new_username : unfollowedUsers) {
+        System.out.println(new_username);
+        Object[] row = {new_username};
+        model.addRow(row);
+    }
+    
+}
+
+public List<String> unfollowed_users(int userId) {
+    GraphSystem gs = GraphSystem.loadGraphFromFile("saver.txt");
+    List<Integer> mutualFollowers = gs.getMutualFollowers(userId);
+    List<String> unfollowedUsers = new ArrayList<>();
+
+    // Assuming you have a method getUsernameFromId() to get the username from the user ID
+    for (int followerId : mutualFollowers) {
+        String username = getUsernameByUserId(followerId);
+        unfollowedUsers.add(username);
+    }
+
+    return unfollowedUsers;
+}
+
+
+
+
+    public String getUsernameByUserId() {
+    String the_guy = null;
+    Connection conn = DbConnection.dbConnect();
+    
+    try {
+        // Prepare SQL query
+        String query = "SELECT username FROM users WHERE user_id = ?";
+        
+        // Execute query
+        PreparedStatement pstmt = conn.prepareStatement(query);
+        pstmt.setInt(1, userid);
+        ResultSet rs = pstmt.executeQuery();
+        
+        // Process the result set
+        if (rs.next()) {
+            the_guy = rs.getString("username");
+        }
+        conn.close();
+    } catch (Exception ex) {
+        ex.printStackTrace();
+    }
+    
+    return the_guy;
+}
+    
+        public String getUsernameByUserId(int the_user_id) {
+    String the_guy = null;
+    Connection conn = DbConnection.dbConnect();
+    
+    try {
+        // Prepare SQL query
+        String query = "SELECT username FROM users WHERE user_id = ?";
+        
+        // Execute query
+        PreparedStatement pstmt = conn.prepareStatement(query);
+        pstmt.setInt(1, the_user_id);
+        ResultSet rs = pstmt.executeQuery();
+        
+        // Process the result set
+        if (rs.next()) {
+            the_guy = rs.getString("username");
+        }
+        conn.close();
+    } catch (Exception ex) {
+        ex.printStackTrace();
+    }
+    
+    return the_guy;
+}
     /**
      * @param args the command line arguments
      */
@@ -263,7 +446,7 @@ public class ConnectFollow extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ConnectFollow().setVisible(true);
+                new ConnectFollow(0).setVisible(true);
             }
         });
     }
@@ -271,13 +454,17 @@ public class ConnectFollow extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton connectbtn;
     private javax.swing.JTextField follow_username_field;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JScrollPane jScrollPane1;
+    private java.awt.Label label1;
     private java.awt.Panel panel1;
-    private java.awt.Panel panel3;
+    private java.awt.Panel panel2;
     private java.awt.Panel panel4;
-    private javax.swing.JTextField username_field;
-    private javax.swing.JButton view_connection;
+    private java.awt.Panel panel6;
+    private javax.swing.JTable postTable;
+    private javax.swing.JLabel username_label;
     // End of variables declaration//GEN-END:variables
 }

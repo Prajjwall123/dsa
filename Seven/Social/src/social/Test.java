@@ -48,12 +48,16 @@ public class Test extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        politics = new javax.swing.JRadioButton();
+        sports = new javax.swing.JRadioButton();
+        films = new javax.swing.JRadioButton();
+        entertainment = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(51, 51, 51));
         setResizable(false);
 
-        panel1.setBackground(new java.awt.Color(102, 102, 102));
+        panel1.setBackground(new java.awt.Color(0, 51, 51));
 
         username_field.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -79,6 +83,7 @@ public class Test extends javax.swing.JFrame {
         });
 
         jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Already Have An Account?");
 
         registerbutton.setBackground(new java.awt.Color(0, 0, 0));
@@ -93,44 +98,68 @@ public class Test extends javax.swing.JFrame {
         });
 
         jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Username");
 
         jLabel4.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Password");
 
         jLabel5.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("REGISTER");
+
+        politics.setForeground(new java.awt.Color(255, 255, 255));
+        politics.setText("Politics");
+
+        sports.setForeground(new java.awt.Color(255, 255, 255));
+        sports.setText("Sports");
+
+        films.setForeground(new java.awt.Color(255, 255, 255));
+        films.setText("Films");
+
+        entertainment.setForeground(new java.awt.Color(255, 255, 255));
+        entertainment.setText("Entertainment");
 
         javax.swing.GroupLayout panel1Layout = new javax.swing.GroupLayout(panel1);
         panel1.setLayout(panel1Layout);
         panel1Layout.setHorizontalGroup(
             panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel1Layout.createSequentialGroup()
-                .addGap(195, 195, 195)
                 .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panel1Layout.createSequentialGroup()
+                        .addGap(195, 195, 195)
                         .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(76, 76, 76)
                         .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(password_field, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(username_field, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(username_field, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(panel1Layout.createSequentialGroup()
+                                .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(entertainment, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(panel1Layout.createSequentialGroup()
+                                        .addComponent(politics, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(44, 44, 44)
+                                        .addComponent(sports, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(51, 51, 51)
+                                .addComponent(films, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(panel1Layout.createSequentialGroup()
-                        .addGap(149, 149, 149)
+                        .addGap(284, 284, 284)
                         .addComponent(jLabel2)
-                        .addGap(33, 33, 33)
+                        .addGap(90, 90, 90)
                         .addComponent(loginbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(230, Short.MAX_VALUE))
+                .addContainerGap(223, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel1Layout.createSequentialGroup()
-                        .addComponent(registerbutton, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(362, 362, 362))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel1Layout.createSequentialGroup()
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(372, 372, 372))))
+                        .addGap(372, 372, 372))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel1Layout.createSequentialGroup()
+                        .addComponent(registerbutton, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(395, 395, 395))))
         );
         panel1Layout.setVerticalGroup(
             panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -147,13 +176,20 @@ public class Test extends javax.swing.JFrame {
                     .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(password_field, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel4)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
-                .addComponent(registerbutton, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(70, 70, 70)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
                 .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(loginbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addGap(98, 98, 98))
+                    .addComponent(politics)
+                    .addComponent(sports)
+                    .addComponent(films))
+                .addGap(18, 18, 18)
+                .addComponent(entertainment)
+                .addGap(32, 32, 32)
+                .addComponent(registerbutton, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(loginbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(53, 53, 53))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -171,61 +207,59 @@ public class Test extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void registerbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerbuttonActionPerformed
-        // TODO add your handling code here:
-        String username = username_field.getText();
+// TODO add your handling code here:
+    String username = username_field.getText();
     String password = password_field.getText();
+    boolean politics_status = politics.isSelected();
+    boolean sports_status = sports.isSelected();
+    boolean film_status = films.isSelected();
+    boolean entertainment_status = entertainment.isSelected();
 
     try {
-    Connection conn = DbConnection.dbConnect();
+        Connection conn = DbConnection.dbConnect();
 
-    // Check if the username already exists in the database
-    String checkQuery = "SELECT COUNT(*) FROM users WHERE username = ?";
-    PreparedStatement checkStatement = conn.prepareStatement(checkQuery);
-    checkStatement.setString(1, username);
-    ResultSet resultSet = checkStatement.executeQuery();
+        // Check if the username already exists in the database
+        String checkQuery = "SELECT COUNT(*) FROM users WHERE username = ?";
+        PreparedStatement checkStatement = conn.prepareStatement(checkQuery);
+        checkStatement.setString(1, username);
+        ResultSet resultSet = checkStatement.executeQuery();
 
-    if (resultSet.next() && resultSet.getInt(1) > 0) {
-        // If the username already exists, show a message to the user
-        JOptionPane.showMessageDialog(null, "Username already exists. Please choose a different username.");
-    } else {
-        // If the username doesn't exist, insert the new user into the database
-        String insertQuery = "INSERT INTO users (username, password) VALUES (?, ?)";
-        PreparedStatement pstmt = conn.prepareStatement(insertQuery, Statement.RETURN_GENERATED_KEYS);
-        pstmt.setString(1, username);
-        pstmt.setString(2, password);
-        int rowsInserted = pstmt.executeUpdate();
-
-        if (rowsInserted > 0) {
-            // User created successfully, get the generated user ID
-            ResultSet generatedKeys = pstmt.getGeneratedKeys();
-            if (generatedKeys.next()) {
-                int userId = generatedKeys.getInt(1);
-                JOptionPane.showMessageDialog(null, "User created successfully with ID: " + userId);
-
-                // Add the user ID to the graph
-                GraphSystem gs = GraphSystem.loadGraphFromFile("saver.txt");
-                if (gs != null) {
-                    gs.addUser(userId);
-                    gs.saveGraphToFile("saver.txt");
-                } else {
-                    System.out.println("Failed to load graph system from file.");
-                }
-
-                // Proceed with further actions
-                Login login = new Login();
-                login.setVisible(true);
-                dispose();
-            }
+        if (resultSet.next() && resultSet.getInt(1) > 0) {
+            // If the username already exists, show a message to the user
+            JOptionPane.showMessageDialog(null, "Username already exists. Please choose a different username.");
         } else {
-            System.out.println("User not created");
+            // If the username doesn't exist, insert the new user into the database
+            String insertQuery = "INSERT INTO users (username, password, politics_interest, sports_interest, film_interest, entertainment_interest) VALUES (?, ?, ?, ?, ?, ?)";
+            PreparedStatement pstmt = conn.prepareStatement(insertQuery, Statement.RETURN_GENERATED_KEYS);
+            pstmt.setString(1, username);
+            pstmt.setString(2, password);
+            pstmt.setBoolean(3, politics_status);
+            pstmt.setBoolean(4, sports_status);
+            pstmt.setBoolean(5, film_status);
+            pstmt.setBoolean(6, entertainment_status);
+            int rowsInserted = pstmt.executeUpdate();
+
+            if (rowsInserted > 0) {
+                // User created successfully, get the generated user ID
+                ResultSet generatedKeys = pstmt.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    int userId = generatedKeys.getInt(1);
+                    JOptionPane.showMessageDialog(null, "User created successfully with ID: " + userId);
+
+                    // Proceed with further actions
+                    Login login = new Login();
+                    login.setVisible(true);
+                    dispose();
+                }
+            } else {
+                System.out.println("User not created");
+            }
         }
+
+        conn.close();
+    } catch (SQLException ex) {
+        ex.printStackTrace();
     }
-
-    conn.close();
-} catch (SQLException ex) {
-    ex.printStackTrace();
-}
-
     }//GEN-LAST:event_registerbuttonActionPerformed
 
     private void loginbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginbtnActionPerformed
@@ -306,6 +340,8 @@ class Graph {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JRadioButton entertainment;
+    private javax.swing.JRadioButton films;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -313,7 +349,9 @@ class Graph {
     private javax.swing.JButton loginbtn;
     private java.awt.Panel panel1;
     private javax.swing.JTextField password_field;
+    private javax.swing.JRadioButton politics;
     private javax.swing.JButton registerbutton;
+    private javax.swing.JRadioButton sports;
     private javax.swing.JTextField username_field;
     // End of variables declaration//GEN-END:variables
 }

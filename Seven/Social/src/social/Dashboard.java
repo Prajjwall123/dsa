@@ -5,6 +5,13 @@
 package social;
 
 import javax.swing.JOptionPane;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import database.DbConnection;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -12,13 +19,15 @@ import javax.swing.JOptionPane;
  */
 public class Dashboard extends javax.swing.JFrame {
     String username;
+    DefaultTableModel model;
+    int postClicked;
     /**
      * Creates new form Dashboard
      */
     public Dashboard(String username) {
         this.username=username;
         initComponents();
-        JOptionPane.showMessageDialog(null, "hello"+username);
+        setRecordsToTable(postTable);
     }
 
     /**
@@ -30,17 +39,18 @@ public class Dashboard extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        popupMenu1 = new java.awt.PopupMenu();
         jPanel1 = new javax.swing.JPanel();
-        popupMenu2 = new java.awt.PopupMenu();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         panel1 = new java.awt.Panel();
         jLabel5 = new javax.swing.JLabel();
         profile_page = new javax.swing.JButton();
         postbtrn = new javax.swing.JButton();
-
-        popupMenu1.setLabel("popupMenu1");
+        textArea1 = new java.awt.TextArea();
+        label1 = new java.awt.Label();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        postTable = new javax.swing.JTable();
+        likebtn = new javax.swing.JButton();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -53,27 +63,31 @@ public class Dashboard extends javax.swing.JFrame {
             .addGap(0, 278, Short.MAX_VALUE)
         );
 
-        popupMenu2.setLabel("popupMenu2");
-
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        panel1.setBackground(new java.awt.Color(102, 102, 102));
+        panel1.setBackground(new java.awt.Color(0, 51, 51));
+        panel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel5.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        jLabel5.setText("POSTS BY USERS YOU FOLLOW");
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setText("POSTS OF YOUR INTERESTS");
+        panel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(315, 72, -1, -1));
 
         profile_page.setBackground(new java.awt.Color(0, 0, 0));
+        profile_page.setFont(new java.awt.Font("Times New Roman", 3, 24)); // NOI18N
         profile_page.setForeground(new java.awt.Color(255, 255, 255));
-        profile_page.setText("profile");
+        profile_page.setText("Your Profile");
         profile_page.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 profile_pageActionPerformed(evt);
             }
         });
+        panel1.add(profile_page, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1034, 57));
 
         postbtrn.setBackground(new java.awt.Color(0, 0, 0));
         postbtrn.setForeground(new java.awt.Color(255, 255, 255));
@@ -83,63 +97,229 @@ public class Dashboard extends javax.swing.JFrame {
                 postbtrnActionPerformed(evt);
             }
         });
+        panel1.add(postbtrn, new org.netbeans.lib.awtextra.AbsoluteConstraints(431, 539, 163, 58));
+        panel1.add(textArea1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 0, 0));
 
-        javax.swing.GroupLayout panel1Layout = new javax.swing.GroupLayout(panel1);
-        panel1.setLayout(panel1Layout);
-        panel1Layout.setHorizontalGroup(
-            panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(profile_page, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(postbtrn, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(17, 17, 17))
-            .addGroup(panel1Layout.createSequentialGroup()
-                .addGap(318, 318, 318)
-                .addComponent(jLabel5)
-                .addContainerGap(341, Short.MAX_VALUE))
-        );
-        panel1Layout.setVerticalGroup(
-            panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel1Layout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addComponent(profile_page)
-                .addGap(18, 18, 18)
-                .addComponent(postbtrn, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel5)
-                .addContainerGap(465, Short.MAX_VALUE))
-        );
+        label1.setText("label1");
+        panel1.add(label1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 0, 0));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+        jScrollPane2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jScrollPane2MouseClicked(evt);
+            }
+        });
+
+        postTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "PostId", "User", "Post", "Likes"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class
+            };
+            boolean[] canEdit = new boolean [] {
+                true, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        postTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                postTableMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(postTable);
+        if (postTable.getColumnModel().getColumnCount() > 0) {
+            postTable.getColumnModel().getColumn(0).setResizable(false);
+        }
+
+        panel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(58, 119, 770, 402));
+
+        likebtn.setBackground(new java.awt.Color(0, 0, 0));
+        likebtn.setForeground(new java.awt.Color(255, 255, 255));
+        likebtn.setText("Like");
+        likebtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                likebtnActionPerformed(evt);
+            }
+        });
+        panel1.add(likebtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 270, 130, 50));
+
+        getContentPane().add(panel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 603));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void postbtrnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_postbtrnActionPerformed
+        // TODO add your handling code here:
+        Post post= new Post(username);
+        post.setVisible(true);
+        dispose();
+//          panel2.show();
+    }//GEN-LAST:event_postbtrnActionPerformed
+
     private void profile_pageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profile_pageActionPerformed
         // TODO add your handling code here:
-        ConnectFollow connection= new ConnectFollow();
+        ConnectFollow connection= new ConnectFollow(Controller.findUserIdByUsername(username));
         connection.setVisible(true);
         dispose();
     }//GEN-LAST:event_profile_pageActionPerformed
 
-    private void postbtrnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_postbtrnActionPerformed
+    private void jScrollPane2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jScrollPane2MouseClicked
+
+    }//GEN-LAST:event_jScrollPane2MouseClicked
+
+    private void likebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_likebtnActionPerformed
         // TODO add your handling code here:
-        ConnectFollow post= new ConnectFollow();
-        post.setVisible(true);
-        dispose();
-    }//GEN-LAST:event_postbtrnActionPerformed
+        LikePost(postClicked);
+    }//GEN-LAST:event_likebtnActionPerformed
+
+    private void postTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_postTableMouseClicked
+        // TODO add your handling code here:
+        int rowNo = postTable.getSelectedRow();
+        TableModel model = postTable.getModel();
+
+        postClicked= Integer.parseInt(model.getValueAt(rowNo, 0).toString());
+    }//GEN-LAST:event_postTableMouseClicked
+
+public void setRecordsToTable(JTable postTable) {
+    int userId = Controller.findUserIdByUsername(username); 
+    DefaultTableModel tableModel = (DefaultTableModel) postTable.getModel();
+    tableModel.setRowCount(0);
+
+    boolean politicsInterest = false;
+    boolean sportsInterest = false;
+    boolean filmInterest = false;
+    boolean entertainmentInterest = false;
+
+    try {
+        Connection con = DbConnection.dbConnect();
+        String interestQuery = "SELECT politics_interest, sports_interest, film_interest, entertainment_interest FROM users WHERE user_id = ?";
+        PreparedStatement interestStmt = con.prepareStatement(interestQuery);
+        interestStmt.setInt(1, userId);
+        ResultSet interestResult = interestStmt.executeQuery();
+
+        if (interestResult.next()) {
+            politicsInterest = interestResult.getBoolean("politics_interest");
+            sportsInterest = interestResult.getBoolean("sports_interest");
+            filmInterest = interestResult.getBoolean("film_interest");
+            entertainmentInterest = interestResult.getBoolean("entertainment_interest");
+        }
+        con.close();
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+
+    try {
+        Connection con = DbConnection.dbConnect();
+        String query = "SELECT p.post_id, u.username, p.content, p.likes " +
+                       "FROM Posts p " +
+                       "JOIN Users u ON p.user_id = u.user_id " +
+                       "WHERE ";
+
+        StringBuilder whereClause = new StringBuilder();
+        whereClause.append("(");
+
+        if (politicsInterest) {
+            whereClause.append("p.category_id = 2 OR ");
+        }
+        if (sportsInterest) {
+            whereClause.append("p.category_id = 1 OR ");
+        }
+        if (filmInterest) {
+            whereClause.append("p.category_id = 4 OR ");
+        }
+        if (entertainmentInterest) {
+            whereClause.append("p.category_id = 3 OR ");
+        }
+
+        // Remove the last "OR" if present
+        if (whereClause.toString().endsWith(" OR ")) {
+            whereClause.delete(whereClause.length() - 4, whereClause.length());
+        }
+
+        whereClause.append(")");
+
+        query += whereClause.toString();
+
+        PreparedStatement pst = con.prepareStatement(query);
+        ResultSet rs = pst.executeQuery();
+
+        while (rs.next()) {
+            int postid = rs.getInt("post_id");
+            String username = rs.getString("username");
+            String content = rs.getString("content");
+            int likes = rs.getInt("likes");
+
+            Object[] obj = { postid, username, content, likes };
+            tableModel.addRow(obj);
+        }
+
+        con.close();
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
+
+
+
 
     
+    private void LikePost(int postId){
+    Connection conn = DbConnection.dbConnect();
+        System.out.println(postId);
+    
+    try{
+        int userId = Controller.findUserIdByUsername(username); 
+        PreparedStatement pstmt = conn.prepareStatement("INSERT INTO Likes (userID, postID) VALUES (?, ?)");
+        pstmt.setInt(1, userId); 
+        pstmt.setInt(2, postId);
+        pstmt.executeUpdate();
+        JOptionPane.showMessageDialog(null, "You have liked "+postId);
+        PreparedStatement pstmt2 = conn.prepareStatement("UPDATE posts SET likes = likes + 1 WHERE post_id = ?");
+    pstmt2.setInt(1, postId);
+    pstmt2.executeUpdate();
+        conn.close();
+        setRecordsToTable(postTable);
+
+    }catch (Exception ex){
+        ex.printStackTrace();
+    }
+}
+    
+    public String getUsernameByUserId(int userId) {
+    String followed_users = null;
+    Connection conn = DbConnection.dbConnect();
+    
+    try {
+        // Prepare SQL query
+        String query = "SELECT username FROM users WHERE user_id = ?";
+        
+        // Execute query
+        PreparedStatement pstmt = conn.prepareStatement(query);
+        pstmt.setInt(1, userId);
+        ResultSet rs = pstmt.executeQuery();
+        
+        // Process the result set
+        if (rs.next()) {
+            followed_users = rs.getString("username");
+        }
+        conn.close();
+    } catch (Exception ex) {
+        ex.printStackTrace();
+    }
+    
+    return followed_users;
+}
     
     /**
      * @param args the command line arguments
@@ -180,11 +360,14 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea jTextArea1;
+    private java.awt.Label label1;
+    private javax.swing.JButton likebtn;
     private java.awt.Panel panel1;
-    private java.awt.PopupMenu popupMenu1;
-    private java.awt.PopupMenu popupMenu2;
+    private javax.swing.JTable postTable;
     private javax.swing.JButton postbtrn;
     private javax.swing.JButton profile_page;
+    private java.awt.TextArea textArea1;
     // End of variables declaration//GEN-END:variables
 }

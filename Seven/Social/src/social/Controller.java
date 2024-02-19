@@ -29,7 +29,7 @@ public class Controller {
             connection = DbConnection.dbConnect(); // Example method for establishing connection
 
             // Prepare SQL query
-            String query = "SELECT userid FROM users WHERE username = ?";
+            String query = "SELECT user_id FROM users WHERE username = ?";
             statement = connection.prepareStatement(query);
             statement.setString(1, username);
 
@@ -38,7 +38,7 @@ public class Controller {
 
             // Process the result set
             if (resultSet.next()) {
-                userId = resultSet.getInt("userid");
+                userId = resultSet.getInt("user_id");
             }
         } catch (Exception ex) {
             ex.printStackTrace(); // Handle or log the exception as needed
@@ -126,7 +126,7 @@ public String getUsernameByUserId(int userId) {
     
     try {
         // Prepare SQL query
-        String query = "SELECT username FROM users WHERE userid = ?";
+        String query = "SELECT username FROM users WHERE user_id = ?";
         
         // Execute query
         PreparedStatement pstmt = conn.prepareStatement(query);

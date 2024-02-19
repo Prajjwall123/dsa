@@ -25,10 +25,16 @@ public class GraphSystem implements Serializable {
     public void addConnection(int user1, int user2) {
         if (!areConnected(user1, user2)) {
             adjacencyList.get(user1).add(user2);
-            adjacencyList.get(user2).add(user1); // For an undirected graph
+//            adjacencyList.get(user2).add(user1);
+             System.out.println(user1+":follows:"+user2);
         } else {
             System.out.println("Users are already connected.");
         }
+    }
+    
+        // Function to check if a user exists
+    public boolean userExists(int userId) {
+        return adjacencyList.containsKey(userId);
     }
     
             // Check if two users are already connected
@@ -40,9 +46,25 @@ public class GraphSystem implements Serializable {
         }
 
     // Get connections for a given user
-    public List<Integer> getConnections(int userId) {
+    public List<Integer> getFollowing(int userId) {
         return adjacencyList.getOrDefault(userId, new ArrayList<>());
     }
+    
+// Get connections for a given user (users who follow the specified user)
+public List<Integer> getFollowers(int userId) {
+    List<Integer> followers = new ArrayList<>();
+    for (Map.Entry<Integer, List<Integer>> entry : adjacencyList.entrySet()) {
+        int user = entry.getKey();
+        List<Integer> connections = entry.getValue();
+        if (connections.contains(userId) && user != userId) {
+            followers.add(user);
+        }
+    }
+    return followers;
+}
+
+    
+    
 
     // Save the graph to a file
     public void saveGraphToFile(String filename) {
@@ -65,16 +87,48 @@ public class GraphSystem implements Serializable {
         }
         return graph;
     }
+    
+    public List<Integer> getMutualFollowers(int userId) {
+        List<Integer> mutualFollowers = new ArrayList<>();
+    
+        // Get the users followed by the given user
+        List<Integer> following = getFollowing(userId);
+        System.out.println(following);
+    
+        // Iterate through the users followed by the given user
+        for (int followedUser : following) {
+            // Get the followers of the followed user
+            List<Integer> followersOfFollowedUser = getFollowers(followedUser);
+            System.out.println("followers of the follwed user , i.e 1 are:"+followersOfFollowedUser);
+            
+            // Check if the followers of the followed user also follow the original user (userId)
+            for (int follower : followersOfFollowedUser) {
+                if (follower != userId && !following.contains(follower) && !mutualFollowers.contains(follower)) {
+                    mutualFollowers.add(follower);
+                }
+            }
+        }
+        return mutualFollowers;
+    }
+    
+    
+
+
 
     public static void main(String[] args) {
-        GraphSystem gs= loadGraphFromFile("saver.txt");
-//        GraphSystem gs= new GraphSystem();
-//         gs.addUser(0);
-//         gs.addUser(1);
-//         gs.addConnection(0, 1);
-//         System.out.println((gs.getConnections(0)));
+//    GraphSystem gs= new GraphSystem();
+//        gs.addUser(0);
+//        gs.addUser(1);
+//        gs.addUser(2);
+//        gs.addUser(3);
+//        gs.addConnection(0, 1);
+//        gs.addConnection(2, 1);
+//        gs.addConnection(3, 1);
+//        gs.addConnection(0, 3);
+//        System.out.println(gs.getFollowers(1));
+//        System.out.println(gs.getMutualFollowers(0));
 //         gs.saveGraphToFile("saver.txt");
         
-        System.out.println(gs.getConnections(1));
+//        System.out.println(gs.getFollowing(1));
     }
 }
