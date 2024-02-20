@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
+//baki
 public class Four_a {
     static class State {
         int x, y;

@@ -3,10 +3,9 @@ package Two;
 import java.util.ArrayList;
 import java.util.List;
 
-// Class for managing secret sharing among peoples
+
 public class Two_b {
     
-    // Method to determine peoples who eventually know the secret
     public static List<Integer> findSecretKnowers(int totalPeople, int[][] sharingIntervals, int initialPerson) {
         // Boolean array to track if each person knows the secret or not
         boolean[] secretKnowers = new boolean[totalPeople];
@@ -32,7 +31,7 @@ public class Two_b {
 
         // Iterating through all peoples
         for (int i = 0; i < totalPeople; i++) {
-            // If the people at index "i" knows the secret, add their index to the list
+            // If the people at index "i" knows the secret, add their index to the list of secret Knowers
             if (secretKnowers[i]) {
                 knowersList.add(i);
             }
@@ -44,7 +43,7 @@ public class Two_b {
     public static void main(String[] args) {
         int totalPeople = 5;
         int[][] sharingIntervals = {{0, 2}, {1, 3}, {2, 4}};
-        int initialPerson = 0; 
+        int initialPerson = 0;
 
         
         List<Integer> result = findSecretKnowers(totalPeople, sharingIntervals, initialPerson);

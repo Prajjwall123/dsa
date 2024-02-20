@@ -2,84 +2,56 @@ package Four;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Stack;
 
-class TreeNode {
-    int val;
-    TreeNode left, right;
+class binTreeNode {
+    int data;
+    binTreeNode left, right;
 
-    public TreeNode(int val) {
-        this.val = val;
+    public binTreeNode(int data) {//constructor to initialize tree, left and right are null at first.
+        this.data = data;
         this.left = this.right = null;
     }
 }
 
 public class Four_b {
-    public static List<Integer> closestKValues(TreeNode root, double target, int x) {
+    public static List<Integer> closestxdatas(binTreeNode root, double k, int x) {//static method to retrn result
         List<Integer> result = new ArrayList<>();
-        Stack<Integer> predecessorStack = new Stack<>();
-        Stack<Integer> successorStack = new Stack<>();
-
-        // Initialize both stacks during the in-order traversal
-        inorderTraversal(root, target, false, predecessorStack);
-        inorderTraversal(root, target, true, successorStack);
-
-        // Merge the stacks to find the x closest values
-        while (x-- > 0) {
-            if (predecessorStack.isEmpty()) {
-                result.add(successorStack.pop());
-            } else if (successorStack.isEmpty()) {
-                result.add(predecessorStack.pop());
-            } else if (Math.abs(predecessorStack.peek() - target) < Math.abs(successorStack.peek() - target)) {
-                result.add(predecessorStack.pop());
-            } else {
-                result.add(successorStack.pop());
-            }
-        }
-
+        inorderTraversal(root, k, x, result);
         return result;
     }
 
-    private static void inorderTraversal(TreeNode root, double target, boolean reverse, Stack<Integer> stack) {
+    private static void inorderTraversal(binTreeNode root, double k, int x, List<Integer> result) {//doing inorder traversal so that we can visit the nodes of bst in sorted order.
         if (root == null) {
-            return;
+            return ;
+        }
+        
+        inorderTraversal(root.left, k, x, result);//going to the left subtree
+
+        if (result.size() < x) {//the number of closet data is not filled
+            result.add(root.data);//add the current node
+        } else {
+            if (Math.abs(k - root.data) < Math.abs(k - result.get(0))) {//if the number of closest data is equal to the number of data in result list, then add the current node instead of the farthest node in the result list.
+                result.remove(0);//farthest node is removed
+                result.add(root.data);//current node is added
+            } else {
+                return;
+            }
         }
 
-        Stack<TreeNode> nodeStack = new Stack<>();
-        TreeNode current = root;
-
-        while (current != null || !nodeStack.isEmpty()) {
-            while (current != null) {
-                nodeStack.push(current);
-                current = (reverse) ? current.right : current.left;
-            }
-
-            current = nodeStack.pop();
-
-            if (!reverse && current.val > target) {
-                break;
-            }
-            if (reverse && current.val <= target) {
-                break;
-            }
-
-            stack.push(current.val);
-
-            current = (reverse) ? current.left : current.right;
-        }
+        inorderTraversal(root.right, k, x, result);//calling the inorder traversal for the right subtree.
     }
 
     public static void main(String[] args) {
-        TreeNode root = new TreeNode(4);
-        root.left = new TreeNode(2);
-        root.right = new TreeNode(5);
-        root.left.left = new TreeNode(1);
-        root.left.right = new TreeNode(3);
+        binTreeNode root = new binTreeNode(4);
+        root.left = new binTreeNode(2);
+        root.right = new binTreeNode(5);
+        root.left.left = new binTreeNode(1);
+        root.left.right = new binTreeNode(3);
 
-        double target = 3.8;
+        double k = 3.8;
         int x = 2;
 
-        List<Integer> closestValues = closestKValues(root, target, x);
-        System.out.println(closestValues); // Output: [4, 5]
+        List<Integer> closestDatas = closestxdatas(root, k, x);
+        System.out.println(closestDatas);
     }
 }

@@ -4,60 +4,55 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Five_b{
+public class Five_b {
 
-    public static List<Integer> findNodesWithOnlyTargetAsParent(int[][] edges, int target) {
+    public static List<Integer> findNodesWithOneParent(int[][] edges, int targetDevice) {
         Map<Integer, List<Integer>> graph = new HashMap<>();
-        Map<Integer, Integer> inDegree = new HashMap<>();
-
-        // Build the graph and calculate in-degree of each node
-        for (int[] edge : edges) {
-            int from = edge[0];
-            int to = edge[1];
-            graph.putIfAbsent(from, new ArrayList<>());
-            graph.get(from).add(to);
-            inDegree.put(to, inDegree.getOrDefault(to, 0) + 1);
+        Map<Integer, Integer> incomingEdgeCounter = new HashMap<>();
+        for (int[] edge : edges) {//loping through each edge in 2d array of edges
+            int parentNode = edge[0];
+            int childNode = edge[1];
+            graph.putIfAbsent(parentNode, new ArrayList<>());//adding new arraylist
+            graph.get(parentNode).add(childNode);
+            incomingEdgeCounter.put(childNode, incomingEdgeCounter.getOrDefault(childNode, 0) + 1);
         }
 
-        // Perform DFS starting from the target node
-        List<Integer> result = new ArrayList<>();
-        dfs(graph, inDegree, target, target, result);
+        List<Integer> result = new ArrayList<>(); // List to store nodes with only one parent
+        dfs(graph, incomingEdgeCounter, targetDevice, targetDevice, result);
 
         return result;
     }
 
-    private static void dfs(Map<Integer, List<Integer>> graph, Map<Integer, Integer> inDegree, int node, int target,
+    // Usng Depth-first search to traverse the graph and find nodes with a single parent
+    private static void dfs(Map<Integer, List<Integer>> graph, Map<Integer, Integer> incomingEdgeCounter, int currNode, int targetDevice,
                             List<Integer> result) {
-        // If the current node has no incoming edges other than from the target node,
-        // add it to the result
-        if (inDegree.getOrDefault(node, 0) == 1 && graph.get(target).contains(node)) {
-            result.add(node);
-            // Add child nodes recursively
-            addChildren(graph, node, result);
+        if (incomingEdgeCounter.getOrDefault(currNode, 0) == 1 && graph.get(targetDevice).contains(currNode)) {
+            result.add(currNode);
+            addChildren(graph, currNode, result);
         }
 
-        // Recursively explore the children of the current node
-        if (graph.containsKey(node)) {
-            for (int child : graph.get(node)) {
-                dfs(graph, inDegree, child, target, result);
+        if (graph.containsKey(currNode)) {
+            for (int child : graph.get(currNode)) {
+                dfs(graph, incomingEdgeCounter, child, targetDevice, result);
             }
         }
     }
+
     private static void addChildren(Map<Integer, List<Integer>> graph, int node, List<Integer> result) {
         if (graph.containsKey(node)) {
             for (int child : graph.get(node)) {
                 result.add(child);
-                addChildren(graph, child, result); // Recursively add children of children
+                addChildren(graph, child, result);
             }
         }
     }
+
     public static void main(String[] args) {
         int[][] edges = { { 0, 1 }, { 0, 2 }, { 1, 3 }, { 1, 6 }, { 2, 4 }, { 4, 6 }, { 4, 5 }, { 5, 7 } };
-        int target = 4;
+        int targetDevice = 4;
 
-        List<Integer> uniqueParents = findNodesWithOnlyTargetAsParent(edges, target);
+        List<Integer> uniqueParents = findNodesWithOneParent(edges, targetDevice);
 
-        System.out.println("Nodes whose only parent is " + target + ":");
         for (int node : uniqueParents) {
             System.out.println(node);
         }

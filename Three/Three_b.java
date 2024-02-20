@@ -1,101 +1,98 @@
-// package Three;
+package Three;
 
-// import java.util.ArrayList;
-// import java.util.List;
-// import java.util.PriorityQueue;
+import java.util.ArrayList;
 
-// // Class to represent an edge in the graph
-// class Edge implements Comparable<Edge> {
-//     int src, dest, weight;
+class PriorityQueue{
+    ArrayList<Integer> minHeap;
+    
+    PriorityQueue(){
+        minHeap=new ArrayList<>();
+    }
+    void add(int data){
 
-//     public Edge(int src, int dest, int weight) {
-//         this.src = src;
-//         this.dest = dest;
-//         this.weight = weight;
-//     }
+        minHeap.add(data);
+        upHeapify(minHeap.size()-1);
 
-//     @Override
-//     public int compareTo(Edge other) {
-//         return Integer.compare(this.weight, other.weight);
-//     }
-// }
+    }
+    void upHeapify(int i){
+        if(i==0){
+            return;
+        }
+        int parentIndex=(i-1)/2;
+        if(minHeap.get(i)<minHeap.get(parentIndex)){
+            swap(i,parentIndex);
+            upHeapify(parentIndex); 
+        }
+    }
 
-// // Class for disjoint-set data structure
-// class DisjointSet {
-//     private int[] parent, rank;
+    // method to swap elements at two positions
+    void  swap(int a, int b){
+        int  tempA=minHeap.get(a);
+        int tempB=minHeap.get(b);
+        minHeap.set(a,tempB);
+        minHeap.set(b,tempA);
+     }
 
-//     public DisjointSet(int size) {
-//         parent = new int[size];
-//         rank = new int[size];
-//         for (int i = 0; i < size; i++) {
-//             parent[i] = i;
-//             rank[i] = 0;
-//         }
-//     }
+    
+    int remove(){//remove teh smallest eklement from the priority queue
+        if(this.size()==0){
+            return -1;
+        }
+        swap(0, minHeap.size()-1); //swapping the fist and last element
+        int val=minHeap.remove(minHeap.size()-1);
+        downHeapify(0);
+        return val;
+    }
+    void downHeapify(int parent){
+        int min=parent;
+        // Comparing with left child
+        int leftIndex=2*parent+1;
+        // if leftchild is least, min is leftchild
+        if(leftIndex< minHeap.size() && minHeap.get(leftIndex)<minHeap.get(min)){
+            min=leftIndex;
+        }
+        // Comparing with right child
+        int rightIndex=2*parent+2;
+        // if rightchild is least, min is rightchild
+        if(rightIndex< minHeap.size() && minHeap.get(rightIndex)<minHeap.get(min)){
+            min=rightIndex;
+        }
 
-//     public int find(int x) {
-//         if (parent[x] != x)
-//             parent[x] = find(parent[x]);
-//         return parent[x];
-//     }
+        if(min !=parent){ //if min is not parent we'll again swap the min and parent and call downheapify on min
+            swap(parent, min);
+            downHeapify(min);
+        }
+    }
 
-//     public void union(int x, int y) {
-//         int rootX = find(x);
-//         int rootY = find(y);
-//         if (rootX != rootY) {
-//             if (rank[rootX] < rank[rootY]) {
-//                 parent[rootX] = rootY;
-//             } else if (rank[rootX] > rank[rootY]) {
-//                 parent[rootY] = rootX;
-//             } else {
-//                 parent[rootY] = rootX;
-//                 rank[rootX]++;
-//             }
-//         }
-//     }
-// }
+    // Method to check the smallest element in min heap
+    int peek(){
+        if(this.size()==0){//teh min heap is empty
+            return -1;
+        }
+        else{
+            return minHeap.get(0);
+        }
+    }
 
-// // Class for Kruskal's algorithm
-// public class Three_b {
-//     public List<Edge> kruskalMST(List<Edge> edges, int vertices) {
-//         // Initialize disjoint-set
-//         DisjointSet ds = new DisjointSet(vertices);
+    // returns the size of min heap.
+    int size(){
+        return minHeap.size();
+    }
+}
 
-//         // Sort edges based on weight using priority queue (min heap)
-//         PriorityQueue<Edge> pq = new PriorityQueue<>(edges);
+public class Three_b {
 
-//         // Initialize result
-//         List<Edge> result = new ArrayList<>();
-
-//         while (!pq.isEmpty() && result.size() < vertices - 1) {
-//             Edge edge = pq.poll();
-//             int srcParent = ds.find(edge.src);
-//             int destParent = ds.find(edge.dest);
-
-//             // Add edge to result if including it doesn't form a cycle
-//             if (srcParent != destParent) {
-//                 result.add(edge);
-//                 ds.union(srcParent, destParent);
-//             }
-//         }
-
-//         return result;
-//     }
-
-//     public static void main(String[] args) {
-//         List<Edge> edges = new ArrayList<>();
-//         edges.add(new Edge(0, 1, 10));
-//         edges.add(new Edge(0, 2, 6));
-//         edges.add(new Edge(0, 3, 5));
-//         edges.add(new Edge(1, 3, 15));
-//         edges.add(new Edge(2, 3, 4));
-
-//         Three_b kruskalMST = new Three_b();
-//         List<Edge> mst = kruskalMST.kruskalMST(edges, 4);
-
-//         System.out.println("Minimum Spanning Tree:");
-//         for (Edge edge : mst) {
-//             System.out.println(edge.src + " - " + edge.dest + " : " + edge.weight);
-//         }
-//     }
-// }
+    public static void main(String[] args) {
+        PriorityQueue priorityQueue = new PriorityQueue();
+        priorityQueue.add(7);
+        priorityQueue.add(4);
+        priorityQueue.add(9);
+        priorityQueue.add(2);
+        priorityQueue.add(11);
+        priorityQueue.add(6);
+        System.out.println("Elements of the priority queue:");
+        while (priorityQueue.size() > 0) {
+            System.out.println(priorityQueue.remove()); 
+        }
+    }
+}

@@ -17,7 +17,6 @@ public class Three_a{
         scoreTracker.addScore(88.7);
         double median2 = scoreTracker.getMedianScore();
         System.out.println("The median is: "+ median2);
-
     }
 }
 
