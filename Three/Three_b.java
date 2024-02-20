@@ -45,26 +45,23 @@ class PriorityQueue{
     }
     void downHeapify(int parent){
         int min=parent;
-        // Comparing with left child
         int leftIndex=2*parent+1;
         // if leftchild is least, min is leftchild
         if(leftIndex< minHeap.size() && minHeap.get(leftIndex)<minHeap.get(min)){
             min=leftIndex;
         }
-        // Comparing with right child
         int rightIndex=2*parent+2;
         // if rightchild is least, min is rightchild
         if(rightIndex< minHeap.size() && minHeap.get(rightIndex)<minHeap.get(min)){
             min=rightIndex;
         }
 
-        if(min !=parent){ //if min is not parent we'll again swap the min and parent and call downheapify on min
+        if(min !=parent){ //if min is not parent, again swapping the min and parent and call downheapify on min
             swap(parent, min);
             downHeapify(min);
         }
     }
 
-    // Method to check the smallest element in min heap
     int peek(){
         if(this.size()==0){//teh min heap is empty
             return -1;
@@ -74,7 +71,6 @@ class PriorityQueue{
         }
     }
 
-    // returns the size of min heap.
     int size(){
         return minHeap.size();
     }
