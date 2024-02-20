@@ -88,6 +88,6 @@ public class Four_a {
                 { 'W', 'W', 'W', 'P', 'W' },
                 { 'r', 'P', 'Q', 'P', 'R' }
         };
-        System.out.println(shortestPath(grid)); // Output: 8
+        System.out.println(shortestPath(grid));
     }
 }
